@@ -1667,6 +1667,17 @@ static int *****alloc_and_load_pin_to_track_map(INP e_pin_type pin_type,
 	   used to index into the correct entries when loading up 'result' */
 	int *****result = NULL;			/* [0..num_pins-1][0..width-1][0..height-1][0..3][0..Fc-1] */
 	result = (int *****) alloc_matrix5(0, Type->num_pins-1, 0, Type->width-1, 0, Type->height-1, 0, 3, 0, max_pin_tracks-1, sizeof(int));
+	for (int ipin = 0; ipin < Type->num_pins; ipin++){
+		for (int iwidth = 0; iwidth < Type->width; iwidth++){
+			for (int iheight = 0; iheight < Type->height; iheight++){
+				for (int iside = 0; iside < 4; iside++){
+					for (int itrack = 0; itrack < max_pin_tracks; itrack++){
+						result[ipin][iwidth][iheight][iside][itrack] = OPEN;
+					}
+				}
+			}
+		}
+	}
 
 	/* multiplier for unidirectional vs bidirectional architectures */
 	int fac = 1;
